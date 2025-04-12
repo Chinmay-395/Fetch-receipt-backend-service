@@ -9,6 +9,14 @@ app.get("/", (req, res) => {
   res.json({ message: "We have mounted the voulme to running container" });
 });
 
+app.post("/receipts/process", (req, res) => {
+  res.json({ message: "We have mounted the voulme to running container" });
+});
+
+app.get("/receipts/{id}/points", (req, res) => {
+  res.json({ message: "We have mounted the voulme to running container" });
+});
+
 app.listen(PORT, () => {
   console.log(`App running on ${PORT}`);
 });
