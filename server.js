@@ -2,10 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import { regex } from "regex";
 dotenv.config();
-const str = "abc";
-// → true
-var x = regex`^\\d+\\.\\d{2}$`.test(str);
-console.log("the ans", x);
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -18,6 +14,8 @@ app.get("/", (req, res) => {
       "You couldn't live with your failure, where did it bring you? Back to me!!!",
   });
 });
+
+let uuidReceipt = {};
 
 app.post("/receipts/process", (req, res) => {
   // console.log(req);
@@ -40,6 +38,7 @@ app.post("/receipts/process", (req, res) => {
     const regex_retailer = /^[\w\s\-&]+$/;
     const regex_description = /^[\w\s\-]+$/;
     /* Testing stuff */
+    /*
     let totalCorrect = "15.55";
     let totalIncorrect = "1.2";
     const string1 = "Hello World-123";
@@ -57,9 +56,51 @@ app.post("/receipts/process", (req, res) => {
     console.log(`"${string2}" matches the regex: ${result22}`);
     console.log(`"${string3}" matches the regex: ${result31}`);
     console.log(`"${string3}" matches the regex: ${result32}`);
-    // console.log(`"${string2}" matches the regex:`);
+    */
+    /* Testing stuff ended */
+
+    const checkItems = (items) => {
+      for (let i = 0; i < items.length; i++) {
+        if (
+          !regex_description.test(items[i].shortDescription) ||
+          !regex_total.test(items[i].price)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    let retailer_name = result.retailer;
+    let total_val = result.total;
+    if (
+      !regex_retailer.test(retailer_name) ||
+      !regex_total.test(total_val) ||
+      checkItems(result.items)
+    ) {
+      const error = new Error("Request body is not correct");
+      error.status = 400;
+      throw error;
+    }
+
+    let uuid = crypto.randomUUID();
+    while (uuidReceipt.hasOwnProperty(uuid)) {
+      //making sure to avoid collisions of uuid
+      uuid = crypto.randomUUID();
+    }
+    console.log("THE UUID: ", uuid);
+
+    uuidReceipt[uuid] = result;
+
+    res.status(200).json({
+      id: uuid,
+    });
+
+    console.log(uuidReceipt);
   } catch (error) {
-    res.status(error.status).json({
+    console.log("The error", error.status);
+    const status = error.status || 500;
+    res.status(status).json({
       message: error.message,
     });
   }
