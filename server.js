@@ -100,14 +100,51 @@ app.post("/receipts/process", (req, res) => {
   } catch (error) {
     console.log("The error", error.status);
     const status = error.status || 500;
+    // the below part is commented out only because I am still debugging and developing.
+    // if(status === 500){
+    //   error.message = "Internal server error";
+    // }
     res.status(status).json({
       message: error.message,
     });
   }
 });
 
-app.get("/receipts/{id}/points", (req, res) => {
-  res.json({ message: "We have mounted the voulme to running container" });
+app.get("/receipts/:id/points", (req, res) => {
+  const id = req.params.id;
+  console.log("THE ID: ", id);
+  try {
+    if (!uuidReceipt.hasOwnProperty(id)) {
+      const error = new Error("Request id doesn't exists");
+      error.status = 400;
+      throw error;
+    }
+  } catch (error) {
+    console.log("The error", error.status);
+    const status = error.status || 500;
+    // the below part is commented out only because I am still debugging and developing.
+    // if(status === 500){
+    //   error.message = "Internal server error";
+    // }
+    res.status(status).json({
+      message: error.message,
+    });
+  }
+
+  // TODO: Implement the points calculation logic here
+  const receiptData = uuidReceipt[id];
+  console.log("The data", receiptData);
+  let points = 0;
+  /**
+   * https://stackoverflow.com/questions/7349312/how-to-count-the-number-of-letters-in-a-random-string
+   * using the regex `/[0-9a-zA-Z]/g` to check the alphanumeric values.
+   */
+  const calcAlphaNumericChar = (retailer_name) => {
+    var numsAlphaChar = retailer_name.match(/[0-9a-zA-Z]/g).length;
+    return numsAlphaChar;
+  };
+
+  res.status(200).json({ points: points });
 });
 
 app.listen(PORT, () => {
