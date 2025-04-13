@@ -20,15 +20,25 @@ app.get("/", (req, res) => {
 });
 
 app.post("/receipts/process", (req, res) => {
+  // console.log(req);
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      const error = new Error("Request body is empty or missing");
-      error.status = 400; // Bad Request
+    const contentType = req.headers["content-type"];
+
+    if (contentType !== "application/json") {
+      const error = new Error("content-type is not correct");
+      error.status = 400;
       throw error;
     }
-    // Process the request if body exists
+    if (!req.body || Object.keys(req.body).length === 0) {
+      const error = new Error("Request body is not correct");
+      error.status = 400;
+      throw error;
+    }
+
     const result = req.body;
-    res.status(200).json(result);
+    const regex_total = /^\d+\.\d{2}$/;
+    const regex_description = /^[\w\s\-&]+$/;
+    console.log("THE RES", result);
   } catch (error) {
     res.status(error.status).json({
       message: error.message,
