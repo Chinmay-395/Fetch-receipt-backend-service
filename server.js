@@ -176,6 +176,11 @@ app.get("/receipts/:id/points", (req, res) => {
       return numsAlphaChar;
     };
 
+    /**
+     * 50 points if the total is a round dollar amount with no cents.
+     * @param {string} total - the value we get from receipt/process api
+     * @returns {number} - points earned
+     */
     const roundDollarAmt = (total) => {
       const totalStr = (total + "").split(".");
       if (typeof totalStr[1] === "undefined") {
