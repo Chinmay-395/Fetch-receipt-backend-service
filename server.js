@@ -58,12 +58,16 @@ app.post("/receipts/process", (req, res) => {
     console.log(`"${string3}" matches the regex: ${result32}`);
     */
     /* Testing stuff ended */
-
+    /**
+     * validating the type of description and price value
+     * @param {object} item - the data in the post API data.
+     * @return {boolean}
+     */
     const checkItems = (items) => {
       for (let i = 0; i < items.length; i++) {
         if (
-          !regex_description.test(items[i].shortDescription) ||
-          !regex_total.test(items[i].price)
+          !regex_description.test(items[i].shortDescription) || //should be of type of string and fit the pattern "^[\\w\\s\\-]+$"
+          !regex_total.test(items[i].price) //should be of type of string and fit the pattern "^\\d+\\.\\d{2}$"
         ) {
           return true;
         }
@@ -73,9 +77,12 @@ app.post("/receipts/process", (req, res) => {
 
     let retailer_name = result.retailer;
     let total_val = result.total;
+    /**
+     * Validating the post api in data
+     */
     if (
-      !regex_retailer.test(retailer_name) ||
-      !regex_total.test(total_val) ||
+      !regex_retailer.test(retailer_name) || //should be of type of string and fit the pattern "^[\\w\\s\\-&]+$"
+      !regex_total.test(total_val) || //should be of type of string and fit the pattern "^\\d+\\.\\d{2}$"
       checkItems(result.items)
     ) {
       const error = new Error("Request body is not correct");
@@ -119,6 +126,37 @@ app.get("/receipts/:id/points", (req, res) => {
       error.status = 400;
       throw error;
     }
+
+    // TODO: Implement the points calculation logic here
+    const receiptData = uuidReceipt[id];
+    console.log("The data", receiptData);
+    let points = 0;
+    /**
+     * https://stackoverflow.com/questions/7349312/how-to-count-the-number-of-letters-in-a-random-string
+     * using the regex `/[0-9a-zA-Z]/g` to check the alphanumeric values.
+     */
+    const calcAlphaNumericChar = (retailer_name) => {
+      var numsAlphaChar = retailer_name.match(/[0-9a-zA-Z]/g).length;
+      return numsAlphaChar;
+    };
+
+    const roundDollarAmt = (total) => {
+      const totalStr = (total + "").split(".");
+      if (typeof totalStr[1] === "undefined") {
+        const error = new Error(
+          "Total value is not accurate with it's decimal value"
+        );
+        error.status = 400;
+        throw error;
+      }
+      if (totalStr[1] === "00") {
+        return 50;
+      } else {
+        return 0;
+      }
+    };
+
+    res.status(200).json({ points: points });
   } catch (error) {
     console.log("The error", error.status);
     const status = error.status || 500;
@@ -130,21 +168,6 @@ app.get("/receipts/:id/points", (req, res) => {
       message: error.message,
     });
   }
-
-  // TODO: Implement the points calculation logic here
-  const receiptData = uuidReceipt[id];
-  console.log("The data", receiptData);
-  let points = 0;
-  /**
-   * https://stackoverflow.com/questions/7349312/how-to-count-the-number-of-letters-in-a-random-string
-   * using the regex `/[0-9a-zA-Z]/g` to check the alphanumeric values.
-   */
-  const calcAlphaNumericChar = (retailer_name) => {
-    var numsAlphaChar = retailer_name.match(/[0-9a-zA-Z]/g).length;
-    return numsAlphaChar;
-  };
-
-  res.status(200).json({ points: points });
 });
 
 app.listen(PORT, () => {
