@@ -62,6 +62,7 @@ app.post("/receipts/process", (req, res) => {
      * validating the type of description and price value
      * @param {object} item - the data in the post API data.
      * @return {boolean}
+     * @see {@link https://stackoverflow.com/a/73985944/9984976 | Valid Times on a Digital Clock}
      */
     const checkItems = (items) => {
       for (let i = 0; i < items.length; i++) {
