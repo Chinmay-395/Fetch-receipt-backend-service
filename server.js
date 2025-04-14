@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import { regex } from "regex";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -106,17 +105,13 @@ app.post("/receipts/process", (req, res) => {
       //making sure to avoid collisions of uuid
       uuid = crypto.randomUUID();
     }
-    console.log("THE UUID: ", uuid);
 
     uuidReceipt[uuid] = result;
 
     res.status(200).json({
       id: uuid,
     });
-
-    console.log(uuidReceipt);
   } catch (error) {
-    console.log("The error", error.status);
     const status = error.status || 500;
     // the below part is commented out only because I am still debugging and developing.
     if (status === 500) {
@@ -132,7 +127,6 @@ app.post("/receipts/process", (req, res) => {
 
 app.get("/receipts/:id/points", (req, res) => {
   const id = req.params.id;
-  console.log("THE ID: ", id);
   try {
     if (!uuidReceipt.hasOwnProperty(id)) {
       const error = new Error("No receipt found for that ID.");
@@ -141,7 +135,6 @@ app.get("/receipts/:id/points", (req, res) => {
     }
 
     const receiptData = uuidReceipt[id];
-    console.log("The data", receiptData);
     let points = 0;
     /**
      * One point for every alphanumeric character in the retailer name.
@@ -265,7 +258,6 @@ app.get("/receipts/:id/points", (req, res) => {
 
     res.status(200).json({ points: calcTotalPoints() });
   } catch (error) {
-    console.log("The error", error.status);
     const status = error.status || 500;
     // the below part is commented out only because I am still debugging and developing.
     if (status === 500) {
