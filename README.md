@@ -59,13 +59,17 @@ open terminal in the folder after cloning the repository <br>
 nvm -v #nvm version 22 and up will be ideal.
 ```
 
-if didn't find, nvm install it. [LINK](https://nodejs.org/en/download)
+if didn't find nvm installed locally, then nvm install it. [LINK](https://nodejs.org/en/download) <br>
+
+now open the folder where you cloned this repository and write the following command in terminal.
 
 ```bash
 npm install
 ```
 
 #### STEP-2: execute the program
+
+write the following command in terminal.
 
 ```bash
 npm start
