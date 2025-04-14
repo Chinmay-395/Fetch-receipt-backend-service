@@ -123,7 +123,9 @@ Reward points for each receipt are determined using several rules:
 
 # API testing
 
-###### STEP-1: open postman or maybe swagger, I would suggest postman
+> I understand that you already have your own api testing suite but if you don't have one this could also be used.
+
+###### STEP-1: open postman
 
 ###### STEP-2: import the file `collection of APIs for receipt.postman_collection.json` which is in the repository.
 
