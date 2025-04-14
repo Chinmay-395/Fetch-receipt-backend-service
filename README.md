@@ -127,9 +127,15 @@ Reward points for each receipt are determined using several rules:
 
 ###### STEP-1: open postman
 
-###### STEP-2: import the file `collection of APIs for receipt.postman_collection.json` which is in the repository.
+Ensure Postman is installed on your system.
 
-###### STEP-3: Open the collection and click on `View complete documentation` where I've explained further on what accords I have done the testing.
+###### STEP-2: Import the Collection
+
+Import the file named `collection of APIs for receipt.postman_collection.json` from the repository.
+
+###### STEP-3: View Documentation
+
+Open the collection and click on `View complete documentation` to review further details and explanations on how the testing is structured.
 
 # API summary
 
