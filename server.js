@@ -162,8 +162,11 @@ app.get("/receipts/:id/points", (req, res) => {
     console.log("The data", receiptData);
     let points = 0;
     /**
-     * https://stackoverflow.com/questions/7349312/how-to-count-the-number-of-letters-in-a-random-string
-     * using the regex `/[0-9a-zA-Z]/g` to check the alphanumeric values.
+     * One point for every alphanumeric character in the retailer name.
+     * using the regex `/[0-9a-zA-Z]/g` to count the alphanumeric values in the retailer string.
+     * @param {string} retailer_name - data we get from receipt/process api where the name of the retailer is present
+     * @returns {number} number of alphanumeric characters in the retailer's name.
+     * @see {@link https://stackoverflow.com/questions/7349312/how-to-count-the-number-of-letters-in-a-random-string | How to count the number of letters in a random string?}
      */
     const calcAlphaNumericChar = (retailer_name) => {
       var numsAlphaChar = retailer_name.match(/[0-9a-zA-Z]/g).length;
