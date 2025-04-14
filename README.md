@@ -106,7 +106,7 @@ Reward points for each receipt are determined using several rules:
 
 > All the points from these rules are summed to give the total points returned by the GET /receipts/{id}/points endpoint. <br> > **Please keep in mind the data doesn't persist**
 
-# Additional Notes
+## Additional Notes
 
 - **Receipt ID:**
   The unique receipt id generated, are generated using `uuid`, by the POST endpoint is required to fetch the points. Ensure it is saved after receipt processing.
