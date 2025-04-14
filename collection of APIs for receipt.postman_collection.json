@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "e56672b9-5335-4dd2-9c71-23d9c05851b9",
+		"name": "collection of APIs for receipt",
+		"description": "There are two major folders Happy Path where everything works and the other is UnHappy Path where it should give errors.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15229905"
+	},
+	"item": [
+		{
+			"name": "Happy Path",
+			"item": [
+				{
+					"name": "receipt_process eg_1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"   Klarbrunn 12-PK 12 FL OZ  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.35\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "A receipt complete receipt in the example provided in api.yml"
+					},
+					"response": []
+				},
+				{
+					"name": "receipt_process eg_2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-12-20\",\n  \"purchaseTime\": \"14:33\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "A receipt complete receipt in the example provided in api.yml"
+					},
+					"response": []
+				},
+				{
+					"name": "receipt_process eg_3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2024-02-29\",//leap year\n  \"purchaseTime\": \"14:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Chicken Stock\",\n      \"price\": \"4.15\"\n    },{\n      \"shortDescription\": \"Pecan Pie 1-pk\",\n      \"price\": \"3.43\"\n    },{\n      \"shortDescription\": \"Fresh Guava             \",\n      \"price\": \"5.22\"\n    },{\n      \"shortDescription\": \"        Starbuck French Roast Coffee\",\n      \"price\": \"8.99\"\n    },{\n      \"shortDescription\": \"   MultiVatimin 1-PK 220 Tablets  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"33.79\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "This is a custom test which looks sending the date in leap year"
+					},
+					"response": []
+				},
+				{
+					"name": "points calculate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/receipts/:id/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								":id",
+								"points"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "79b9c797-baf0-47b6-9020-322c5c721d49"
+								}
+							]
+						},
+						"description": "when making request using this API please use the id which you get in response, from post API request as the data doesn't persist."
+					},
+					"response": []
+				}
+			],
+			"description": "Everything here should give 200 status"
+		},
+		{
+			"name": "Unhappy Path",
+			"item": [
+				{
+					"name": "empty body",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "If the request body is empty it shouldn't pass, it will respond with status 400, bad-request."
+					},
+					"response": []
+				},
+				{
+					"name": "content-type is incorrect",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "If the content-type is not `application/json` it will respond with status 400, bad-request."
+					},
+					"response": []
+				},
+				{
+					"name": "Date is incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-24-20\", // the month is incorrect\n  \"purchaseTime\": \"14:33\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "If the purchase date is incorrect, the month is incorrect in this request."
+					},
+					"response": []
+				},
+				{
+					"name": "Date is incorrect 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-24-33\", // the day is incorrect\n  \"purchaseTime\": \"14:33\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The day is beyond 31 days, which will never be the case thus, it should respond 400 status bad-request."
+					},
+					"response": []
+				},
+				{
+					"name": "Time is incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-12-20\",\n  \"purchaseTime\": \"-12:33\", //it is not correct time\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "Time is negative numbered string, which should give bad request."
+					},
+					"response": []
+				},
+				{
+					"name": "Time is incorrect 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-12-20\",\n  \"purchaseTime\": \"121:33\", //it is not correct time\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The time is incorrect as the hours is a triple digit string."
+					},
+					"response": []
+				},
+				{
+					"name": "Time is incorrect 3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-12-20\",\n  \"purchaseTime\": \"24:33\", //it is not correct time\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The time is incorrect because it is beyond 24hrs, in the military time format."
+					},
+					"response": []
+				},
+				{
+					"name": "price is incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.491\" //the price is incorrect because it has 3 numbers after the decimal point \n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"   Klarbrunn 12-PK 12 FL OZ  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.35\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The price of \"Mountain Dew 12PK\", the price is incorrect because it has 1 digit after the decimal point although there should 2 and exactly 2 digits after the decimal according to regex provided."
+					},
+					"response": []
+				},
+				{
+					"name": "price is incorrect 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.4\" //the price is incorrect because it has 1 number after the decimal point although there should 2 and exactly 2\n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"   Klarbrunn 12-PK 12 FL OZ  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.35\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The price of \"Mountain Dew 12PK\", the price is incorrect because it has 1 digit after the decimal point although there should 2 and exactly 2 digits after the decimal according to regex provided."
+					},
+					"response": []
+				},
+				{
+					"name": "total is incorrect",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.49\" \n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"   Klarbrunn 12-PK 12 FL OZ  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.315\" //the price is incorrect because it has 3 numbers after the decimal point \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/receipts/process",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								"process"
+							]
+						},
+						"description": "The `total` value is not in the correct format, because there more than 2 digits after decimal, and it should give status 400 bad-request."
+					},
+					"response": []
+				},
+				{
+					"name": "points calculate with incorrect receipt id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/receipts/:id/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								":id",
+								"points"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "80420a4c-6216-4bad-b8cb-607f0b8d4a4"
+								}
+							]
+						},
+						"description": "If you provide a receipt-id which is incorrect it should give, \"No receipt found for that ID.\"\n\nkeep in mind the receipt data doesn't persist."
+					},
+					"response": []
+				},
+				{
+					"name": "points calculate with no receipt id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/receipts/:id/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receipts",
+								":id",
+								"points"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "If you don't send the id, it will give response status as 400 bad-request."
+					},
+					"response": []
+				}
+			],
+			"description": "Everything here should give response 400 status, bad-request."
+		},
+		{
+			"name": "the base",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				},
+				"description": "This is a simple testing making sure the expressjs app works."
+			},
+			"response": []
+		}
+	]
+}
