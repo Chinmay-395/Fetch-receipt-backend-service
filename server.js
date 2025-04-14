@@ -90,6 +90,36 @@ app.post("/receipts/process", (req, res) => {
       throw error;
     }
 
+    //check if the date is correct
+    if (
+      typeof result.purchaseDate !== string ||
+      !isNaN(new Date(result.purchaseDate))
+    ) {
+      const error = new Error("The date is not correct.");
+      error.status = 400;
+      throw error;
+    }
+
+    //check if the time is correct
+    /**
+     * The time will always be in military time and i.e. 24-hour time
+     * @param {string} - dateValue
+     * @return {boolean}
+     */
+    function validateTime(dateValue) {
+      let [hours, mins] = dateValue.split(":").map(Number);
+      return hours <= 23 && hours >= 0 && mins >= 0 && mins < 60;
+    }
+
+    if (
+      typeof result.purchaseTime !== string ||
+      !validateTime(result.purchaseTime)
+    ) {
+      const error = new Error("The time is not correct.");
+      error.status = 400;
+      throw error;
+    }
+
     let uuid = crypto.randomUUID();
     while (uuidReceipt.hasOwnProperty(uuid)) {
       //making sure to avoid collisions of uuid
