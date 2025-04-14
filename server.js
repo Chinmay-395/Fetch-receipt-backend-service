@@ -142,7 +142,7 @@ app.post("/receipts/process", (req, res) => {
     //   error.message = "Internal server error";
     // }
     res.status(status).json({
-      message: error.message,
+      message: "The receipt is invalid.\n" + error.message,
     });
   }
 });
