@@ -140,7 +140,6 @@ app.get("/receipts/:id/points", (req, res) => {
       throw error;
     }
 
-    // TODO: Implement the points calculation logic here
     const receiptData = uuidReceipt[id];
     console.log("The data", receiptData);
     let points = 0;
