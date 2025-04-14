@@ -93,8 +93,8 @@ app.post("/receipts/process", (req, res) => {
 
     //check if the date is correct
     if (
-      typeof result.purchaseDate !== string ||
-      !isNaN(new Date(result.purchaseDate))
+      typeof result.purchaseDate !== "string" ||
+      isNaN(new Date(result.purchaseDate)) //validating the date is correct or not.
     ) {
       const error = new Error("The date is not correct.");
       error.status = 400;
@@ -113,7 +113,7 @@ app.post("/receipts/process", (req, res) => {
     }
 
     if (
-      typeof result.purchaseTime !== string ||
+      typeof result.purchaseTime !== "string" ||
       !validateTime(result.purchaseTime)
     ) {
       const error = new Error("The time is not correct.");
