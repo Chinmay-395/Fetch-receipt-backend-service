@@ -284,7 +284,7 @@ app.get("/receipts/:id/points", (req, res) => {
       return points;
     };
 
-    res.status(200).json({ points: points });
+    res.status(200).json({ points: calcTotalPoints() });
   } catch (error) {
     console.log("The error", error.status);
     const status = error.status || 500;
