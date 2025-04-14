@@ -37,27 +37,7 @@ app.post("/receipts/process", (req, res) => {
     const regex_total = /^\d+\.\d{2}$/;
     const regex_retailer = /^[\w\s\-&]+$/;
     const regex_description = /^[\w\s\-]+$/;
-    /* Testing stuff */
-    /*
-    let totalCorrect = "15.55";
-    let totalIncorrect = "1.2";
-    const string1 = "Hello World-123";
-    const string2 = "Hello, World!";
-    const string3 = "Hello World-123@";
-    const result11 = regex_retailer.test(string1);
-    const result12 = regex_retailer.test(string2);
-    const result21 = regex_description.test(string1);
-    const result22 = regex_description.test(string2);
-    const result31 = regex_retailer.test(string3);
-    const result32 = regex_description.test(string3);
-    console.log(`"${string1}" matches the regex: ${result11}`);
-    console.log(`"${string2}" matches the regex: ${result12}`);
-    console.log(`"${string1}" matches the regex: ${result21}`);
-    console.log(`"${string2}" matches the regex: ${result22}`);
-    console.log(`"${string3}" matches the regex: ${result31}`);
-    console.log(`"${string3}" matches the regex: ${result32}`);
-    */
-    /* Testing stuff ended */
+
     /**
      * validating the type of description and price value
      * @param {object} item - the data in the post API data.
