@@ -1,6 +1,0 @@
-- currently April 12th 2025
-
-decided to use a nodejs instead of golang.
-
-used the Dipesh Malvia nodejs docker image
-    -> remember to credit him in your read-me file
