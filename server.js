@@ -196,6 +196,93 @@ app.get("/receipts/:id/points", (req, res) => {
         return 0;
       }
     };
+    /**
+     * 25 points if the total is a multiple of `0.25`.
+     * @param {string} total - the value we get from receipt/process api
+     * @return {number} - points earned
+     */
+    const multipleOf0_25 = (total) => {
+      let val = parseFloat(total);
+      if (val % 0.25 === 0) {
+        return 25;
+      } else return 0;
+    };
+    /**
+     * 5 points for every two items on the receipt.
+     * for eg: 5 items purchased
+     * 5 divided by 2 is 2
+     * thus the total points earned here are 10
+     * @param {object} item - it has two major things "shortDescription" & "price" of the products purchased
+     * @returns {number}
+     */
+    const calcEveryTwoItems = (items) => {
+      let numberOfItems = items.length;
+      return Math.floor(numberOfItems / 2) * 5;
+    };
+
+    /**
+     * If the trimmed length of the item description is a multiple of 3,
+     * multiply the price by `0.2` and round up to the nearest integer.
+     * The result is the number of points earned.
+     * for example: the given string is "  Emils Cheese Pizza     "
+     * after triming the string becomes "Emils Cheese Pizza"
+     * the length of the string is 18
+     * now this length divided by 3 the remainder is zero thus,
+     * multiply the the price of that item by 0.2 and round it up.
+     * @param {object} item - it has two major things "shortDescription" & "price" of the products purchased
+     * @returns {number} - points earned
+     */
+    const calcItemDescriptCost = (items) => {
+      let points = 0;
+      for (let i = 0; i < items.length; i++) {
+        let str = items[i].shortDescription;
+        str = str.trim();
+        if (str.length % 3 === 0) {
+          let cost = items[i].price * 0.2;
+          points += Math.ceil(cost);
+        }
+      }
+      return points;
+    };
+
+    /**
+     * 6 points if the day in the purchase date is odd.
+     * the purchaseDate value is YYYY-MM-DD format
+     * @param {string} purchaseDate - Date of purchase, given in the POST-API request.
+     */
+    const calcPurchaseDateOdd = (purchaseDate) => {
+      let [year, month, day] = purchaseDate.split("-").map(Number);
+
+      if (day % 2 !== 0) {
+        return 6;
+      }
+      return 0;
+    };
+    /**
+     * 10 points if the time of purchase is after 2:00pm and before 4:00pm.
+     * the time is in 24hr time
+     * @param {string} purchaseTime - Time of purchase, given in the POST-API request.
+     * @return {number}
+     */
+    const calcTimeOfPur = (purchaseTime) => {
+      if (purchaseTime >= "14:00" && purchaseTime <= "16:00") {
+        return 10;
+      }
+      return 0;
+    };
+
+    const calcTotalPoints = () => {
+      points =
+        calcAlphaNumericChar(receiptData.retailer) +
+        roundDollarAmt(receiptData.total) +
+        multipleOf0_25(receiptData.total) +
+        calcEveryTwoItems(receiptData.items) +
+        calcItemDescriptCost(receiptData.items) +
+        calcPurchaseDateOdd(receiptData.purchaseDate) +
+        calcTimeOfPur(receiptData.purchaseTime);
+
+      return points;
+    };
 
     res.status(200).json({ points: points });
   } catch (error) {
