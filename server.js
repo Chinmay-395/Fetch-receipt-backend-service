@@ -139,11 +139,13 @@ app.post("/receipts/process", (req, res) => {
     console.log("The error", error.status);
     const status = error.status || 500;
     // the below part is commented out only because I am still debugging and developing.
-    // if(status === 500){
-    //   error.message = "Internal server error";
-    // }
+    if (status === 500) {
+      error.message = "Internal server error";
+    } else {
+      error.message = "The receipt is invalid." + " " + error.message;
+    }
     res.status(status).json({
-      message: "The receipt is invalid.\n" + error.message,
+      message: error.message,
     });
   }
 });
