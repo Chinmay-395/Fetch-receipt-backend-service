@@ -152,8 +152,8 @@ app.get("/receipts/:id/points", (req, res) => {
   console.log("THE ID: ", id);
   try {
     if (!uuidReceipt.hasOwnProperty(id)) {
-      const error = new Error("Request id doesn't exists");
-      error.status = 400;
+      const error = new Error("No receipt found for that ID.");
+      error.status = 404;
       throw error;
     }
 
