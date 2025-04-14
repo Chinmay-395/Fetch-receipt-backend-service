@@ -289,9 +289,11 @@ app.get("/receipts/:id/points", (req, res) => {
     console.log("The error", error.status);
     const status = error.status || 500;
     // the below part is commented out only because I am still debugging and developing.
-    // if(status === 500){
-    //   error.message = "Internal server error";
-    // }
+    if (status === 500) {
+      error.message = "Internal server error";
+    } else {
+      error.message = "No receipt found for that ID.";
+    }
     res.status(status).json({
       message: error.message,
     });
